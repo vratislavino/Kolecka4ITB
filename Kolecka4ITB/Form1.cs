@@ -51,8 +51,8 @@ namespace Kolecka4ITB
             } else {
                 panel1.Show();
                 //rNum.Value = (decimal) shape.Radius;
-                xNum.Value = shape.Center.X;
-                yNum.Value = shape.Center.Y;
+                xNum.Value = shape.Origin.X;
+                yNum.Value = shape.Origin.Y;
                 button2.BackColor = shape.Color;
                 checkBox3.Checked = shape.Fill;
             }
@@ -82,8 +82,7 @@ namespace Kolecka4ITB
                     return;
                 }
 
-
-                currentShape.CalculateSize(e.Location);
+                currentShape.ChangeSize(currentShape.CalculateSize(e.Location));
                 canvas1.Refresh();
             }
 

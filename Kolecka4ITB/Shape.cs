@@ -9,8 +9,8 @@ namespace Kolecka4ITB
 {
     public abstract class Shape
     {
-        protected Point center;
-        public Point Center { get => center; set => center = value; }
+        protected Point origin;
+        public Point Origin { get => origin; set => origin = value; }
 
         protected Color color;
         public Color Color { get => color; set => color = value; }
@@ -28,7 +28,7 @@ namespace Kolecka4ITB
         protected int crossSize = 10;
 
         public Shape(Point center, Color color, bool fill) {
-            this.center = center;
+            this.origin = center;
             this.fill = fill;
             this.highlighted = false;
 
@@ -52,16 +52,14 @@ namespace Kolecka4ITB
         }
 
         // TODO: Change this :) 
-        public void CalculateSize(Point location) {
-            ChangeSize(location.Distance(center));
-        }
-
+        public abstract float CalculateSize(Point location);
+            
         internal void ChangeX(int value) {
-            this.center.X = value;
+            this.origin.X = value;
         }
 
         internal void ChangeY(int value) {
-            this.center.Y = value;
+            this.origin.Y = value;
         }
 
         internal void ChangeFill(bool filled) {

@@ -84,10 +84,10 @@ namespace Kolecka4ITB
             Refresh();
         }
         /*
-        internal void EditCircle(decimal r, decimal x, decimal y, Color color, bool fill) {
-            selectedShape.Edit((float) r, (int) x, (int) y, color, fill);
-            Refresh();
-        }
-        */
+internal void EditCircle(decimal r, decimal x, decimal y, Color color, bool fill) {
+   selectedShape.Edit((float) r, (int) x, (int) y, color, fill);
+   Refresh();
+}
+*/
     }
 }

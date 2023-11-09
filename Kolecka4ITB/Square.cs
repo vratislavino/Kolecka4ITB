@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,28 +16,35 @@ namespace Kolecka4ITB
             size = 0;
         }
 
+        public override float CalculateSize(Point location) {
+            int xdiff = location.X - origin.X;
+            int ydiff = location.Y - origin.Y;
+            return xdiff > ydiff ? xdiff : ydiff;
+        }
+
         public override void ChangeSize(float size) {
             this.size = size;
+
         }
 
         public override bool ContainsPoint(Point location, out float currentDistance) {
-            currentDistance = location.Distance(center);
+            currentDistance = location.Distance(origin);
 
-            return location.X > center.X - size / 2 && location.X < center.X + size / 2 &&
-                location.Y > center.Y - size / 2 && location.Y < center.Y + size / 2;
+            return location.X > origin.X && location.X < origin.X + size &&
+                location.Y > origin.Y && location.Y < origin.Y + size;
         }
 
         public override void Draw(Graphics g, bool showCenters) {
             if (fill) {
                 g.FillRectangle(colorBrush,
-                    center.X,
-                    center.Y,
+                    origin.X,
+                    origin.Y,
                     size,
                     size);
             } else {
                 g.DrawRectangle(colorPen,
-                    center.X,
-                    center.Y,
+                    origin.X,
+                    origin.Y,
                     size,
                     size);
             }
@@ -44,15 +52,24 @@ namespace Kolecka4ITB
             // highlight
             if (highlighted) {
                 g.DrawRectangle(outlinePen,
-                    center.X,
-                    center.Y,
+                    origin.X,
+                    origin.Y,
                     size,
                     size);
             }
 
             if (showCenters) {
-                g.DrawLine(centerPen, center.X - crossSize, center.Y, center.X + crossSize, center.Y);
-                g.DrawLine(centerPen, center.X, center.Y - crossSize, center.X, center.Y + crossSize);
+
+                g.DrawLine(centerPen, 
+                    origin.X + size / 2 - crossSize, 
+                    origin.Y + size / 2, 
+                    origin.X +size / 2 + crossSize, 
+                    origin.Y+size / 2 );
+                g.DrawLine(centerPen, 
+                    origin.X + size / 2, 
+                    origin.Y + size / 2 - crossSize, 
+                    origin.X + size / 2, 
+                    origin.Y + size / 2 + crossSize);
             }
         }
     }

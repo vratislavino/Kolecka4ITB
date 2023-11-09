@@ -19,14 +19,14 @@ namespace Kolecka4ITB
         public override void Draw(Graphics g, bool showCenters) {
             if (fill) {
                 g.FillEllipse(colorBrush,
-                    center.X - radius,
-                    center.Y - radius,
+                    origin.X - radius,
+                    origin.Y - radius,
                     2 * radius,
                     2 * radius);
             } else {
                 g.DrawEllipse(colorPen,
-                    center.X - radius,
-                    center.Y - radius,
+                    origin.X - radius,
+                    origin.Y - radius,
                     2 * radius,
                     2 * radius);
             }
@@ -34,15 +34,15 @@ namespace Kolecka4ITB
             // highlight
             if(highlighted) {
                 g.DrawEllipse(outlinePen,
-                    center.X - radius,
-                    center.Y - radius,
+                    origin.X - radius,
+                    origin.Y - radius,
                     2 * radius,
                     2 * radius);
             }
 
             if(showCenters) {
-                g.DrawLine(centerPen, center.X - crossSize, center.Y, center.X + crossSize, center.Y);
-                g.DrawLine(centerPen, center.X, center.Y - crossSize, center.X, center.Y + crossSize);
+                g.DrawLine(centerPen, origin.X - crossSize, origin.Y, origin.X + crossSize, origin.Y);
+                g.DrawLine(centerPen, origin.X, origin.Y - crossSize, origin.X, origin.Y + crossSize);
             }
         }
 
@@ -51,7 +51,7 @@ namespace Kolecka4ITB
         }
 
         public override bool ContainsPoint(Point location, out float currentDistance) {
-            currentDistance = location.Distance(center);
+            currentDistance = location.Distance(origin);
             return currentDistance < radius;
         }
 
@@ -59,10 +59,13 @@ namespace Kolecka4ITB
         // -- fixed by ChatGPT
         internal void Edit(float r, int x, int y, Color color, bool fill) {
             this.radius = r;
-            this.center = new Point(x, y);
+            this.origin = new Point(x, y);
             this.color = color;
             this.fill = fill;
         }
 
+        public override float CalculateSize(Point location) {
+            return location.Distance(origin);
+        }
     }
 }
